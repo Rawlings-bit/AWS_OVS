@@ -1,0 +1,27 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+metadata: 
+  name: 5gcluster
+  region: eu-south-1
+  nodeGroups: 
+  - name: ngroup-1 
+    region: eu-south-1
+    instanceType: t3.medium 
+    node-ami: ami-018f430e4f5375e69 
+    ssh-public-key: ekskeys 
+    desiredCapacity: 4
+  - name: ngroup-2 
+    instanceType: t3.medium 
+    node-ami: ami-018f430e4f5375e69
+    ssh-public-key: ekskeys 
+    desiredCapacity: 4
+  - name: ngroup-3
+    instanceType: t3.medium 
+    node-ami: ami-018f430e4f5375e69 
+    ssh-public-key: ekskeys 
+    desiredCapacity: 4
+    overrideBootstrapCommand: |
+     #!/bin/bash
+     … bootsrap scrip
+
+
