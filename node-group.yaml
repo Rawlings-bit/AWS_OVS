@@ -1,27 +1,27 @@
+# cluster.yaml
+# A cluster with an unmanaged nodegroup and two managed nodegroups.
+---
 apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
-metadata: 
-  name: 5gcluster
+
+metadata:
+  name: managed-cluster
   region: eu-south-1
-  nodeGroups: 
-  - name: ngroup-1 
-    region: eu-south-1
-    instanceType: t3.medium 
-    node-ami: ami-018f430e4f5375e69 
-    ssh-public-key: ekskeys 
-    desiredCapacity: 4
-  - name: ngroup-2 
-    instanceType: t3.medium 
-    node-ami: ami-018f430e4f5375e69
-    ssh-public-key: ekskeys 
-    desiredCapacity: 4
-  - name: ngroup-3
-    instanceType: t3.medium 
-    node-ami: ami-018f430e4f5375e69 
-    ssh-public-key: ekskeys 
-    desiredCapacity: 4
+
+managedNodeGroups:
+  - name: custom-ng
+    ami: ami-063a1c92a1a42bc27
+    securityGroups:
+      attachIDs: ["sg-0a78c9059972cf665"]
+    maxPodsPerNode: 80
+    ssh:
+      allow: true
+    volumeSize: 100
+    volumeName: /dev/xvda
+    volumeEncrypted: true
+    disableIMDSv1: true
     overrideBootstrapCommand: |
-     #!/bin/bash
-     … bootsrap scrip
+      #!/bin/bash
+      /etc/eks/bootstrap.sh managed-cluster --kubelet-extra-args '--node-labels=eks.amazonaws.com/nodegroup=custom-ng,eks.amazonaws.com/nodegroup-image=ami-063a1c92a1a42bc27'
 
 
