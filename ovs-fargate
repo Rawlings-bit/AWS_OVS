@@ -70,7 +70,7 @@ spec:
           restartPolicy: Always
           volumeMounts:
         - name: ovs-var-run
-           mountPath: "/"
+          mountPath: "/"
            
       volumes:
         - name: task-pv-storage
