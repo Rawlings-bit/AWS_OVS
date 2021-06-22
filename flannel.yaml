@@ -106,7 +106,7 @@ metadata:
 data:
   cni-conf.json: |
     {
-      "name": "cbr0",
+      "name": "cbr1",
       "cniVersion": "0.3.1",
       "plugins": [
         {
@@ -187,6 +187,7 @@ spec:
         args:
         - --ip-masq
         - --kube-subnet-mgr
+        - --iface=ens6
         resources:
           requests:
             cpu: "100m"
